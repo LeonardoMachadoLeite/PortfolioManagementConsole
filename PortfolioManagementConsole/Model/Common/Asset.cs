@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Model.Common
 {
-    internal abstract class Asset
+    internal abstract class Asset : IAsset
     {
         private readonly string ticker;
         private readonly string assetType;
@@ -22,30 +22,30 @@ namespace PortfolioManagementConsole.Model.Common
             this.avgPrice = 0;
         }
 
-        public void buy(BuyOrder order)
+        public void Buy(BuyOrder order)
         {
-            this.calculateNewAvgPrice(order);
+            this.CalculateNewAvgPrice(order);
             this.amount += order.Amount;
         }
 
-        private void calculateNewAvgPrice(BuyOrder order)
+        private void CalculateNewAvgPrice(BuyOrder order)
         {
             this.avgPrice = (this.amount*this.avgPrice + order.Amount*order.AvgPrice) / (this.amount+order.Amount);
         }
 
-        public SellResult sell(SellOrder order)
+        public SellResult Sell(SellOrder order)
         {
             this.amount -= order.Amount;
-            double saleResult = this.calculateSaleResult(order);
+            double saleResult = this.CalculateSaleResult(order);
             return new SellResult(order, saleResult);
         }
 
-        private double calculateSaleResult(SellOrder order)
+        private double CalculateSaleResult(SellOrder order)
         {
             return (order.AvgPrice - this.avgPrice) * order.Amount;
         }
 
-        public void split(double split)
+        public void Split(double split)
         {
             Trace.Assert(split > 1);
 
@@ -53,7 +53,7 @@ namespace PortfolioManagementConsole.Model.Common
             this.avgPrice /= split;
         }
 
-        public void reverseSplit(double split)
+        public void ReverseSplit(double split)
         {
             Trace.Assert(split > 1);
 
@@ -62,7 +62,7 @@ namespace PortfolioManagementConsole.Model.Common
         }
 
         public string Ticker => this.ticker;
-        public string AssetType => assetType;
+        public string AssetType => this.assetType;
         public double Amount => this.amount;
         public double AvgPrice => this.avgPrice;
 
