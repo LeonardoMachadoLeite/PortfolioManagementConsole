@@ -13,7 +13,7 @@ namespace PortfolioManagementConsole.Utilities.Bovespa
 
         private LinkedList<Transaction> transactions;
 
-        public ExtractTransactionsFromExcelFile(string excelFilePath, string excelSheetName) : base(excelFilePath, excelSheetName)
+        public ExtractTransactionsFromExcelFile(string excelFilePath) : base(excelFilePath, "OPERACOES")
         {
             this.transactions = new LinkedList<Transaction>();
         }

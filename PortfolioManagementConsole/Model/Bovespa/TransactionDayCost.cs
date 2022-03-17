@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,5 +58,10 @@ namespace PortfolioManagementConsole.Model.Bovespa
         public double Tax => this.tax;
 
         public double OtherFees => this.otherFees;
+
+        public string GetJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }
