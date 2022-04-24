@@ -12,8 +12,9 @@ namespace PortfolioManagementConsole.Model.Investor
         private string name;
         private DateTime birthDate;
 
-        protected Investor(string name, DateTime birthDate)
+        protected Investor(int _id, string name, DateTime birthDate)
         {
+            this._id = _id;
             this.name = name;
             this.birthDate = birthDate;
         }

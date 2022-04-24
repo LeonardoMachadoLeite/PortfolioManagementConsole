@@ -18,6 +18,7 @@ namespace PortfolioManagementConsole.Utilities
         public ExcelReader(string excelFilePath)
         {
             this.excelFilePath = excelFilePath;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
         public void OpenExcelFile()
