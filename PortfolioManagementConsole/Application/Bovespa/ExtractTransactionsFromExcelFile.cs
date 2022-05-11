@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Application.Bovespa
 {
-    public class ExtractTransactionsFromExcelFile : ExtractFromExcelFile
+    public class ExtractTransactionsFromExcelFile : ExtractFromExcelFile, IExtractTransactionsFromExcelFile
     {
 
         private LinkedList<ITransaction> transactions;
