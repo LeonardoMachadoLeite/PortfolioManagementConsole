@@ -1,30 +1,30 @@
 ﻿using OfficeOpenXml;
-using PortfolioManagementConsole.Model.Bovespa;
+using PortfolioManagementConsole.Domain.Bovespa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Utilities.Bovespa
+namespace PortfolioManagementConsole.Application.Bovespa
 {
-    internal class ExtractTransactionsFromExcelFile : ExtractFromExcelFile
+    public class ExtractTransactionsFromExcelFile : ExtractFromExcelFile
     {
 
-        private LinkedList<Transaction> transactions;
+        private LinkedList<ITransaction> transactions;
 
         public ExtractTransactionsFromExcelFile(string excelFilePath) : base(excelFilePath, "OPERACOES")
         {
-            this.transactions = new LinkedList<Transaction>();
+            this.transactions = new LinkedList<ITransaction>();
         }
 
-        internal LinkedList<Transaction> Transactions { get => transactions; }
+        public LinkedList<ITransaction> Transactions { get => transactions; }
 
         public void ReadTransactions()
         {
             this.transactions.Clear();
             ExcelWorksheet sheet = this.SheetReader.ExcelWorksheet;
-            Transaction newTransaction;
+            ITransaction newTransaction;
 
             for (int row = 2; row < this.SheetReader.FilledRows; row++)
             {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Utilities
+namespace PortfolioManagementConsole.Application
 {
-    internal class ExcelSheetReader
+    public class ExcelSheetReader
     {
         private readonly string excelSheetName;
         private readonly ExcelWorksheet excelWorksheet;

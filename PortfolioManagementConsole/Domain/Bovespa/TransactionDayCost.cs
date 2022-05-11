@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Model.Bovespa
+namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class TransactionDayCost
+    internal class TransactionDayCost : ITransactionDayCost
     {
         private readonly DateTime transactionDay;
         private readonly double liquidationRate;

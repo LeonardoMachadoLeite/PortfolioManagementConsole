@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Model.Bovespa
+namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class Transaction
+    internal class Transaction : ITransaction
     {
         private readonly DateTime transactionDate;
         private readonly string ticker;

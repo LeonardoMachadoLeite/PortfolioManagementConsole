@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Utilities
+namespace PortfolioManagementConsole.Application
 {
-    internal class ExcelReader
+    public class ExcelReader
     {
         private readonly string excelFilePath;
         private FileInfo excelFile;

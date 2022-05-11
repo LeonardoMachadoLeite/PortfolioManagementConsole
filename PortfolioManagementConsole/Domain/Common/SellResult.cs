@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Model.Common
+namespace PortfolioManagementConsole.Domain.Common
 {
-    internal class SellResult
+    internal class SellResult : ISellResult
     {
         private readonly DateTime date;
         private readonly string ticker;
@@ -24,7 +24,7 @@ namespace PortfolioManagementConsole.Model.Common
             this.totalValueSale = totalValueSale;
             this.totalResult = totalResult;
         }
-        public SellResult(SellOrder order, double result)
+        public SellResult(ISellOrder order, double result)
         {
             this.date = order.Date;
             this.ticker = order.Ticker;

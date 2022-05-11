@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Model.Common
+namespace PortfolioManagementConsole.Domain.Common
 {
     internal abstract class Asset : IAsset
     {
@@ -22,25 +22,25 @@ namespace PortfolioManagementConsole.Model.Common
             this.avgPrice = 0;
         }
 
-        public void Buy(BuyOrder order)
+        public void Buy(IBuyOrder order)
         {
             this.CalculateNewAvgPrice(order);
             this.amount += order.Amount;
         }
 
-        private void CalculateNewAvgPrice(BuyOrder order)
+        private void CalculateNewAvgPrice(IBuyOrder order)
         {
             this.avgPrice = (this.amount*this.avgPrice + order.Amount*order.AvgPrice) / (this.amount+order.Amount);
         }
 
-        public SellResult Sell(SellOrder order)
+        public ISellResult Sell(ISellOrder order)
         {
             this.amount -= order.Amount;
             double saleResult = this.CalculateSaleResult(order);
             return new SellResult(order, saleResult);
         }
 
-        private double CalculateSaleResult(SellOrder order)
+        private double CalculateSaleResult(ISellOrder order)
         {
             return (order.AvgPrice - this.avgPrice) * order.Amount;
         }

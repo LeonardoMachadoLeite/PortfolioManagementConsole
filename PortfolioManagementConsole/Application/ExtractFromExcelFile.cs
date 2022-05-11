@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Utilities
+namespace PortfolioManagementConsole.Application
 {
-    internal abstract class ExtractFromExcelFile
+    public abstract class ExtractFromExcelFile
     {
         private ExcelReader excelReader;
         private ExcelSheetReader sheetReader;

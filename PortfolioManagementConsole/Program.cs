@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using OfficeOpenXml;
-using PortfolioManagementConsole.Model.Bovespa;
-using PortfolioManagementConsole.Utilities;
-using PortfolioManagementConsole.Utilities.Bovespa;
+using PortfolioManagementConsole.Domain.Bovespa;
+using PortfolioManagementConsole.Application;
+using PortfolioManagementConsole.Application.Bovespa;
 using System.Collections.Generic;
 
 var filePath = "D:\\Investment Data\\bovespa\\Notas de Corretagem\\2019\\CLEAR\\2019.10 NotaCorretagem.xlsx";

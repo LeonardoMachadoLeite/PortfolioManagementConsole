@@ -1,29 +1,29 @@
 ﻿using OfficeOpenXml;
-using PortfolioManagementConsole.Model.Bovespa;
+using PortfolioManagementConsole.Domain.Bovespa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Utilities.Bovespa
+namespace PortfolioManagementConsole.Application.Bovespa
 {
-    internal class ExtractTransactionDayCostFromExcelFile : ExtractFromExcelFile
+    public class ExtractTransactionDayCostFromExcelFile : ExtractFromExcelFile
     {
-        private LinkedList<TransactionDayCost> transactionDayCosts;
+        private LinkedList<ITransactionDayCost> transactionDayCosts;
 
         public ExtractTransactionDayCostFromExcelFile(string excelFilePath) : base(excelFilePath, "CUSTOS")
         {
-            this.transactionDayCosts = new LinkedList<TransactionDayCost>();
+            this.transactionDayCosts = new LinkedList<ITransactionDayCost>();
         }
 
-        internal LinkedList<TransactionDayCost> TransactionDayCosts { get => transactionDayCosts; }
+        public LinkedList<ITransactionDayCost> TransactionDayCosts { get => transactionDayCosts; }
 
         public void ReadTransactionsDayCosts()
         {
             this.transactionDayCosts.Clear();
             ExcelWorksheet sheet = this.SheetReader.ExcelWorksheet;
-            TransactionDayCost newTransactionDayCosts;
+            ITransactionDayCost newTransactionDayCosts;
 
             for (int row = 2; row < this.SheetReader.FilledRows; row++)
             {

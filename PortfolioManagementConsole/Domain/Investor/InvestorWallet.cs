@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortfolioManagementConsole.Model.Investor
+namespace PortfolioManagementConsole.Domain.Investor
 {
     internal class InvestorWallet
     {
