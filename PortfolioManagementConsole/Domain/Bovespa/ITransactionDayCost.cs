@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    public interface ITransactionDayCost
+    public interface ITransactionDayCost : IComparable<ITransactionDayCost>
     {
         public DateTime TransactionDay { get; }
 

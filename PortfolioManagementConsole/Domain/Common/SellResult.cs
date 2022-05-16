@@ -24,7 +24,7 @@ namespace PortfolioManagementConsole.Domain.Common
             this.totalValueSale = totalValueSale;
             this.totalResult = totalResult;
         }
-        public SellResult(ISellOrder order, double result)
+        public SellResult(IOrder order, double result)
         {
             this.date = order.Date;
             this.ticker = order.Ticker;

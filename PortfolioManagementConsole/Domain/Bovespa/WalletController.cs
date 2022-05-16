@@ -1,4 +1,5 @@
 ﻿using PortfolioManagementConsole.Application.Bovespa;
+using PortfolioManagementConsole.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class BovespaWalletController
+    internal class WalletController
     {
 
-        private LinkedList<ITransaction> _transactions = new LinkedList<ITransaction>();
-        private LinkedList<ITransactionDayCost> _transactionsDayCost = new LinkedList<ITransactionDayCost>();
+        private List<ITransaction> _transactions = new List<ITransaction>();
+        private List<ITransactionDayCost> _transactionsDayCost = new List<ITransactionDayCost>();
         private readonly IGetBuyOrSellHistoryExcelFiles historyExcelFiles;
 
-        public BovespaWalletController(string notasCorretagemPath)
+        public WalletController(string notasCorretagemPath)
         {
             this.historyExcelFiles = new GetBuyOrSellHistoryExcelFiles(notasCorretagemPath);
 
@@ -22,6 +23,8 @@ namespace PortfolioManagementConsole.Domain.Bovespa
             {
                 AddTransactionsFromExcelFile(filePath);
             }
+            _transactions.Sort();
+            _transactionsDayCost.Sort();
         }
 
         private void AddTransactionsFromExcelFile(string fileName)
@@ -34,16 +37,16 @@ namespace PortfolioManagementConsole.Domain.Bovespa
 
             foreach (var newTransaction in transactionsFromExcelFile.Transactions)
             {
-                this._transactions.AddLast(newTransaction);
+                this._transactions.Add(newTransaction);
             }
 
             foreach (var newTransactionDayCost in transactionDayCostFromExcelFile.TransactionDayCosts)
             {
-                this._transactionsDayCost.AddLast(newTransactionDayCost);
+                this._transactionsDayCost.Add(newTransactionDayCost);
             }
         }
 
-        public LinkedList<ITransaction> Transactions => this._transactions;
-        public LinkedList<ITransactionDayCost> TransactionsDayCosts => this._transactionsDayCost;
+        public List<ITransaction> Transactions => this._transactions;
+        public List<ITransactionDayCost> TransactionsDayCosts => this._transactionsDayCost;
     }
 }

@@ -14,35 +14,45 @@ namespace PortfolioManagementConsole.Domain.Common
         private double amount;
         private double avgPrice;
 
+        private LinkedList<IOrder> ordersList;
+        private LinkedList<ISellResult> sellResultsList;
+
         public Asset(string ticker, string assetType)
         {
             this.ticker = ticker;
             this.assetType = assetType;
             this.amount = 0;
             this.avgPrice = 0;
+
+            this.ordersList = new LinkedList<IOrder>();
+            this.sellResultsList = new LinkedList<ISellResult>();
         }
 
-        public void Buy(IBuyOrder order)
+        public void Buy(IOrder order)
         {
+            Trace.Assert(order.Amount > 0);
+
             this.CalculateNewAvgPrice(order);
             this.amount += order.Amount;
         }
 
-        private void CalculateNewAvgPrice(IBuyOrder order)
+        private void CalculateNewAvgPrice(IOrder order)
         {
             this.avgPrice = (this.amount*this.avgPrice + order.Amount*order.AvgPrice) / (this.amount+order.Amount);
         }
 
-        public ISellResult Sell(ISellOrder order)
+        public ISellResult Sell(IOrder order)
         {
-            this.amount -= order.Amount;
+            Trace.Assert(order.Amount < 0);
+
+            this.amount += order.Amount;
             double saleResult = this.CalculateSaleResult(order);
             return new SellResult(order, saleResult);
         }
 
-        private double CalculateSaleResult(ISellOrder order)
+        private double CalculateSaleResult(IOrder order)
         {
-            return (order.AvgPrice - this.avgPrice) * order.Amount;
+            return (this.avgPrice - order.AvgPrice) * order.Amount;
         }
 
         public void Split(double split)
@@ -65,6 +75,7 @@ namespace PortfolioManagementConsole.Domain.Common
         public string AssetType => this.assetType;
         public double Amount => this.amount;
         public double AvgPrice => this.avgPrice;
-
+        public LinkedList<IOrder> OrdersList => ordersList;
+        public LinkedList<ISellResult> SellResultsList => sellResultsList;
     }
 }

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Common
 {
-    internal class BuyOrder : IBuyOrder
+    internal class Order : IOrder
     {
         private readonly DateTime date;
         private readonly string ticker;
         private readonly double amount;
         private readonly double avgPrice;
 
-        public BuyOrder(DateTime date, string ticker, double amount, double avgPrice)
+        public Order(DateTime date, string ticker, double amount, double avgPrice)
         {
-            Trace.Assert(amount > 0);
+            Trace.Assert(amount != 0);
 
             this.ticker = ticker;
             this.amount = amount;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Common
 {
-    public interface ISellOrder
+    public interface IOrder
     {
         public DateTime Date { get; }
         public string Ticker { get; }

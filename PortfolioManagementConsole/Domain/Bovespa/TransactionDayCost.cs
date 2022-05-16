@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class TransactionDayCost : ITransactionDayCost
+    internal class TransactionDayCost : ITransactionDayCost, IComparable<ITransactionDayCost>
     {
         private readonly DateTime transactionDay;
         private readonly double liquidationRate;
@@ -58,6 +58,12 @@ namespace PortfolioManagementConsole.Domain.Bovespa
         public double Tax => this.tax;
 
         public double OtherFees => this.otherFees;
+
+        public int CompareTo(ITransactionDayCost? other)
+        {
+            if (other is null) return 1;
+            else return this.TransactionDay.CompareTo(other.TransactionDay);
+        }
 
         public string GetJson()
         {

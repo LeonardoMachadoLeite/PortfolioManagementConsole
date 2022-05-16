@@ -12,9 +12,11 @@ namespace PortfolioManagementConsole.Domain.Common
         public string AssetType { get; }
         public double Amount { get; }
         public double AvgPrice { get; }
+        public LinkedList<IOrder> OrdersList { get; }
+        public LinkedList<ISellResult> SellResultsList { get; }
 
-        public void Buy(IBuyOrder order);
-        public ISellResult Sell(ISellOrder order);
+        public void Buy(IOrder order);
+        public ISellResult Sell(IOrder order);
         public void Split(double split);
         public void ReverseSplit(double split);
     }

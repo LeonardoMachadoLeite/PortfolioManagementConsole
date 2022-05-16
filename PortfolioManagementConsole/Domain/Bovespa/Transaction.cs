@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PortfolioManagementConsole.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class Transaction : ITransaction
+    internal class Transaction : ITransaction, IComparable<ITransaction>
     {
         private readonly DateTime transactionDate;
         private readonly string ticker;
@@ -36,9 +37,53 @@ namespace PortfolioManagementConsole.Domain.Bovespa
 
         public double TotalPrice => this.avgPrice*this.amount;
 
+        public int CompareTo(ITransaction? other)
+        {
+            if (other is null) return 1;
+            else
+            {
+                int transDateCompare = this.TransactionDate.CompareTo(other.TransactionDate);
+                int transTickerCompare = this.Ticker.CompareTo(other.Ticker);
+                int transBuyOrSell = this.BuyOrSell.CompareTo(other.BuyOrSell);
+
+                if (transDateCompare == 0)
+                {
+                    if (transTickerCompare == 0)
+                    {
+                        if (transBuyOrSell == 0)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return transBuyOrSell;
+                        }
+                    }
+                    else
+                    {
+                        return transTickerCompare;
+                    }
+                }
+                else
+                {
+                    return transDateCompare;
+                }
+            };
+        }
+
         public string GetJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        public IOrder ToBuyOrder()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IOrder ToSellOrder()
+        {
+            throw new NotImplementedException();
         }
     }
 }
