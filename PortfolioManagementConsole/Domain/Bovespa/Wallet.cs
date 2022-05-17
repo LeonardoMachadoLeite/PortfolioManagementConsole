@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class WalletController
+    internal class Wallet
     {
 
         private List<ITransaction> _transactions = new List<ITransaction>();
         private List<ITransactionDayCost> _transactionsDayCost = new List<ITransactionDayCost>();
         private readonly IGetBuyOrSellHistoryExcelFiles historyExcelFiles;
 
-        public WalletController(string notasCorretagemPath)
+        public Wallet(string notasCorretagemPath)
         {
             this.historyExcelFiles = new GetBuyOrSellHistoryExcelFiles(notasCorretagemPath);
 

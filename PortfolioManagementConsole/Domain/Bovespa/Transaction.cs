@@ -23,15 +23,20 @@ namespace PortfolioManagementConsole.Domain.Bovespa
             this.buyOrSell = buyOrSell;
             this.amount = amount;
             this.avgPrice = avgPrice;
+
+            if (this.buyOrSell == "V")
+            {
+                this.amount *= -1;
+            }
         }
 
-        public DateTime TransactionDate => this.transactionDate;
+        public DateTime Date => this.transactionDate;
 
         public string Ticker => this.ticker;
 
         public string BuyOrSell => this.buyOrSell;
 
-        public int Amount => this.amount;
+        public double Amount => this.amount;
 
         public double AvgPrice => this.avgPrice;
 
@@ -42,7 +47,7 @@ namespace PortfolioManagementConsole.Domain.Bovespa
             if (other is null) return 1;
             else
             {
-                int transDateCompare = this.TransactionDate.CompareTo(other.TransactionDate);
+                int transDateCompare = this.Date.CompareTo(other.Date);
                 int transTickerCompare = this.Ticker.CompareTo(other.Ticker);
                 int transBuyOrSell = this.BuyOrSell.CompareTo(other.BuyOrSell);
 
@@ -74,16 +79,6 @@ namespace PortfolioManagementConsole.Domain.Bovespa
         public string GetJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        public IOrder ToBuyOrder()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IOrder ToSellOrder()
-        {
-            throw new NotImplementedException();
         }
     }
 }

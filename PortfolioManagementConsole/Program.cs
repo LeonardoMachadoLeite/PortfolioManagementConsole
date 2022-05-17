@@ -7,6 +7,6 @@ using System.Collections.Generic;
 
 var dirPath = "D:\\Investment Data\\bovespa\\Notas de Corretagem";
 
-WalletController bovaController = new WalletController(dirPath);
+Wallet bovaController = new Wallet(dirPath);
 
-Console.WriteLine("Breakpoint");
+Console.WriteLine(bovaController);
