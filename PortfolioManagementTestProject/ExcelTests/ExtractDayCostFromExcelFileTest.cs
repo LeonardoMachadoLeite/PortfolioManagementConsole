@@ -1,13 +1,12 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using PortfolioManagementConsole.Application.Bovespa;
+using System;
+using Xunit;
 
-namespace PortfolioManagementTests
+namespace PortfolioManagementTestProject.ExcelTests
 {
-    [TestClass]
     public class ExtractDayCostFromExcelFileTest
     {
-        [TestMethod]
+        [Fact]
         public void TestExtractTransactionsFromExcel()
         {
             var filePath = "D:\\Investment Data\\bovespa\\Notas de Corretagem\\2019\\CLEAR\\2019.10 NotaCorretagem.xlsx";

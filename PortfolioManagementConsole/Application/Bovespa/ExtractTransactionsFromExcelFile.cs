@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using PortfolioManagementConsole.Domain.Bovespa;
+using PortfolioManagementConsole.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class AnnualAssetReport
+    public class AnnualAssetReport
     {
         private int year;
         private Dictionary<string, IAsset> assetsEndOfPreviousYear;
@@ -22,11 +22,11 @@ namespace PortfolioManagementConsole.Domain.Bovespa
             this.assetsEndOfYear = new Dictionary<string, IAsset>();
         }
 
-        private AnnualAssetReport(int year, Dictionary<string, IAsset> listaAtivosAnoAnterior)
+        private AnnualAssetReport(int year, Dictionary<string, IAsset> assetsEndOfPreviousYear)
         {
             this.year = year;
-            this.assetsEndOfPreviousYear = new Dictionary<string, IAsset>(listaAtivosAnoAnterior);
-            this.assetsEndOfYear = new Dictionary<string, IAsset>();
+            this.assetsEndOfPreviousYear = new Dictionary<string, IAsset>(assetsEndOfPreviousYear);
+            this.assetsEndOfYear = new Dictionary<string, IAsset>(assetsEndOfPreviousYear);
         }
 
         public void ProcessTransactions(List<ITransaction> transactions)
@@ -71,6 +71,32 @@ namespace PortfolioManagementConsole.Domain.Bovespa
         public IExcelSheetTable CreateAnnualAssetReportSheetTable()
         {
             return new ExcelSheetTable(Convert.ToString(this.year), AnnualAssetDetail.GetHeaders());
+        }
+
+        public Dictionary<string, IReflectiveProperty> GetAnnualAssetDetails()
+        {
+            Dictionary<string, IReflectiveProperty> dict = new Dictionary<string, IReflectiveProperty>();
+            IAsset assetEndOfPreviousYear, asset;
+
+
+            foreach (var ticker in this.assetsEndOfYear.Keys)
+            {
+                if (!this.assetsEndOfYear.ContainsKey(ticker))
+                {
+                    assetEndOfPreviousYear = null;
+                }
+                else
+                {
+                    assetEndOfPreviousYear = this.assetsEndOfYear[ticker];
+                }
+                
+                asset = this.assetsEndOfYear[ticker];
+                dict[ticker] = new AnnualAssetDetail(ticker,
+                                               assetEndOfPreviousYear,
+                                               asset);
+            }
+
+            return dict;
         }
 
         public int Year => year;

@@ -16,7 +16,7 @@ namespace PortfolioManagementConsole.Application
 
         public ExcelFileGenerator(string fileName)
         {
-            this.outputDir = "";
+            this.outputDir = "D:/VisualStudioProjects/PortfolioManagementConsole/OutputData/";
             this.fileName = fileName;
             this.fileInfo = new FileInfo(this.outputDir + this.fileName);
         }
@@ -26,17 +26,18 @@ namespace PortfolioManagementConsole.Application
             if (this.fileInfo.Exists)
             {
                 this.fileInfo.Delete();
-                this.fileInfo = new FileInfo(this.outputDir + this.fileName);
             }
+            this.fileInfo = new FileInfo(this.outputDir + this.fileName);
         }
 
-        public void CreateSheetFromDict(ExcelSheetTable excelSheetTable, Dictionary<string, IReflectiveProperty> dict)
+        public void CreateSheetFromDict(IExcelSheetTable excelSheetTable, Dictionary<string, IReflectiveProperty> dict)
         {
             ExcelPackage excelPackage;
 
             using (excelPackage = new ExcelPackage(this.fileInfo))
             {
                 excelSheetTable.GenerateSheetFromDictionary(excelPackage, dict);
+                excelPackage.SaveAs(this.outputDir + this.fileName);
             }
         }
 

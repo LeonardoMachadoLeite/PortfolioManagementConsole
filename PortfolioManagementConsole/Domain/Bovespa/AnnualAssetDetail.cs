@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioManagementConsole.Domain.Bovespa
 {
-    internal class AnnualAssetDetail : IReflectiveProperty
+    public class AnnualAssetDetail : IReflectiveProperty
     {
 
         public AnnualAssetDetail(string ticker, IAsset assetPreviousYear, IAsset assetCurrentYear)
