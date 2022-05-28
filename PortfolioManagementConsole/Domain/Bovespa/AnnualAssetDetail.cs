@@ -23,7 +23,7 @@ namespace PortfolioManagementConsole.Domain.Bovespa
             else
             {
                 this.AmountPreviousYear = "0";
-                this.AquisitionPricePreviousYear = "0,00";
+                this.AquisitionPricePreviousYear = "0.00";
             }
 
             this.AmountCurrentYear= Convert.ToString(assetCurrentYear.Amount);

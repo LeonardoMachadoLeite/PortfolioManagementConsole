@@ -26,7 +26,11 @@ namespace PortfolioManagementConsole.Domain.Bovespa
         {
             this.year = year;
             this.assetsEndOfPreviousYear = new Dictionary<string, IAsset>(assetsEndOfPreviousYear);
-            this.assetsEndOfYear = new Dictionary<string, IAsset>(assetsEndOfPreviousYear);
+            this.assetsEndOfYear = new Dictionary<string, IAsset>();
+            foreach (var asset in assetsEndOfPreviousYear)
+            {
+                this.assetsEndOfYear[asset.Key] = new Acao((Acao)asset.Value);
+            }
         }
 
         public void ProcessTransactions(List<ITransaction> transactions)
@@ -45,27 +49,16 @@ namespace PortfolioManagementConsole.Domain.Bovespa
 
         private void ProcessTransaction(Dictionary<string, IAsset> assets, ITransaction transaction)
         {
-            if (assets.ContainsKey(transaction.Ticker))
-            {
-                if (transaction.Amount > 0)
-                {
-                    assets[transaction.Ticker].Buy(transaction);
-                }
-                else
-                {
-                    assets[transaction.Ticker].Sell(transaction);
-                }
-                
-            }
-            else
+            if (!assets.ContainsKey(transaction.Ticker))
             {
                 assets[transaction.Ticker] = new Acao(transaction.Ticker);
             }
+            assets[transaction.Ticker].ProcessOrder(transaction);
         }
 
         public AnnualAssetReport CreateBaseForNextYearReport()
         {
-            return new AnnualAssetReport(year+1, this.assetsEndOfYear);
+            return new AnnualAssetReport(year + 1, this.assetsEndOfYear);
         }
 
         public IExcelSheetTable CreateAnnualAssetReportSheetTable()
@@ -81,22 +74,42 @@ namespace PortfolioManagementConsole.Domain.Bovespa
 
             foreach (var ticker in this.assetsEndOfYear.Keys)
             {
-                if (!this.assetsEndOfYear.ContainsKey(ticker))
+                if (RelevantTickerForYear(ticker))
                 {
-                    assetEndOfPreviousYear = null;
+                    if (!this.assetsEndOfPreviousYear.ContainsKey(ticker))
+                    {
+                        assetEndOfPreviousYear = null;
+                    }
+                    else
+                    {
+                        assetEndOfPreviousYear = this.assetsEndOfPreviousYear[ticker];
+                    }
+
+                    asset = this.assetsEndOfYear[ticker];
+                    dict[ticker] = new AnnualAssetDetail(ticker,
+                                                   assetEndOfPreviousYear,
+                                                   asset);
                 }
-                else
-                {
-                    assetEndOfPreviousYear = this.assetsEndOfYear[ticker];
-                }
-                
-                asset = this.assetsEndOfYear[ticker];
-                dict[ticker] = new AnnualAssetDetail(ticker,
-                                               assetEndOfPreviousYear,
-                                               asset);
             }
 
             return dict;
+        }
+
+        private bool RelevantTickerForYear(string ticker)
+        {
+            double amountPreviousYear = 0, amountEndOfCurrentYear = 0;
+
+            if (this.assetsEndOfPreviousYear.ContainsKey(ticker))
+            {
+                amountPreviousYear = this.assetsEndOfPreviousYear[ticker].Amount;
+            }
+
+            if (this.assetsEndOfYear.ContainsKey(ticker))
+            {
+                amountEndOfCurrentYear = this.assetsEndOfYear[ticker].Amount;
+            }
+
+            return amountPreviousYear != 0 || amountEndOfCurrentYear != 0;
         }
 
         public int Year => year;

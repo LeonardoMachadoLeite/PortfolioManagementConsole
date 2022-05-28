@@ -12,5 +12,9 @@ namespace PortfolioManagementConsole.Domain.Bovespa
         public Acao(string ticker) : base(ticker, "Ações")
         {
         }
+
+        public Acao(Acao acao) : base(acao)
+        {
+        }
     }
 }

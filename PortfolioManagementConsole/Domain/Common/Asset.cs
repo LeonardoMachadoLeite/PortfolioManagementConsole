@@ -28,6 +28,23 @@ namespace PortfolioManagementConsole.Domain.Common
             this.sellResultsList = new LinkedList<ISellResult>();
         }
 
+        public Asset(Asset asset)
+        {
+            this.ticker = asset.ticker;
+            this.assetType = asset.assetType;
+            this.amount = asset.amount;
+            this.avgPrice = asset.avgPrice;
+
+            this.ordersList = new LinkedList<IOrder>();
+            this.sellResultsList = new LinkedList<ISellResult>();
+
+            foreach (IOrder order in asset.OrdersList)
+            {
+                this.ProcessOrder(order);
+            }
+
+        }
+
         public void Buy(IOrder order)
         {
             Trace.Assert(order.Amount > 0);
@@ -38,7 +55,7 @@ namespace PortfolioManagementConsole.Domain.Common
 
         private void CalculateNewAvgPrice(IOrder order)
         {
-            this.avgPrice = (this.amount*this.avgPrice + order.Amount*order.AvgPrice) / (this.amount+order.Amount);
+            this.avgPrice = (this.amount * this.avgPrice + order.Amount * order.AvgPrice) / (this.amount + order.Amount);
         }
 
         public ISellResult Sell(IOrder order)
@@ -48,6 +65,18 @@ namespace PortfolioManagementConsole.Domain.Common
             this.amount += order.Amount;
             double saleResult = this.CalculateSaleResult(order);
             return new SellResult(order, saleResult);
+        }
+
+        public void ProcessOrder(IOrder order)
+        {
+            if (order.Amount > 0)
+            {
+                this.Buy(order);
+            }
+            else
+            {
+                this.Sell(order);
+            }
         }
 
         private double CalculateSaleResult(IOrder order)

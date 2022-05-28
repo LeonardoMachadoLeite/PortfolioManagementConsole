@@ -19,5 +19,7 @@ namespace PortfolioManagementConsole.Domain.Common
         public ISellResult Sell(IOrder order);
         public void Split(double split);
         public void ReverseSplit(double split);
+        public void ProcessOrder(IOrder order);
+
     }
 }
