@@ -100,6 +100,11 @@ namespace PortfolioManagementConsole.Domain.Common
             this.avgPrice *= split;
         }
 
+        public IAssetState GetCurrentState(DateTime stateDate)
+        {
+            return new AssetState(stateDate, this.ticker, this.AssetType, this.Amount, this.AvgPrice);
+        }
+
         public string Ticker => this.ticker;
         public string AssetType => this.assetType;
         public double Amount => this.amount;
